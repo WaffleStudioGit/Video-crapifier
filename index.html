@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Video Crapifier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anybody:wght@700;800;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+  <main class="shell">
+    <header class="hero">
+      <p class="kicker">InfinityFree-ready · runs in your browser</p>
+      <h1 class="brand">Video<br />Crapifier</h1>
+      <p class="tag">
+        Drop a clip. We grind it to 10&nbsp;fps, smash the pixels, and clip the audio until it hurts.
+      </p>
+    </header>
+
+    <section class="stage" aria-label="Crapifier controls">
+      <label class="drop" id="dropZone">
+        <input type="file" id="fileInput" accept="video/*" hidden />
+        <span class="drop-title" id="dropTitle">Pick a video</span>
+        <span class="drop-sub" id="dropSub">MP4, WebM, MOV — processed locally, nothing uploaded</span>
+      </label>
+
+      <div class="controls" id="controls" hidden>
+        <label class="field">
+          <span>Pixel blocks <strong id="pixelVal">18</strong></span>
+          <input type="range" id="pixelSize" min="4" max="48" value="18" />
+        </label>
+        <label class="field">
+          <span>Audio boost <strong id="boostVal">14×</strong></span>
+          <input type="range" id="boost" min="2" max="40" value="14" step="1" />
+        </label>
+        <label class="field">
+          <span>Clip hardness <strong id="clipVal">92%</strong></span>
+          <input type="range" id="clip" min="40" max="99" value="92" />
+        </label>
+        <p class="hint">Output locked at <strong>10 fps</strong> so your browser does less work.</p>
+        <div class="actions">
+          <button type="button" class="btn primary" id="goBtn">Crapify</button>
+          <button type="button" class="btn ghost" id="stopBtn" hidden>Stop</button>
+        </div>
+      </div>
+
+      <div class="preview-wrap" id="previewWrap" hidden>
+        <canvas id="preview" width="640" height="360"></canvas>
+        <div class="status" id="status">Idle</div>
+      </div>
+
+      <div class="result" id="result" hidden>
+        <video id="outVideo" controls playsinline></video>
+        <a class="btn primary" id="downloadBtn" download="crapified.webm">Download crapified.webm</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="crapifier.js"></script>
+</body>
+</html>
