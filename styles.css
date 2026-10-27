@@ -127,6 +127,10 @@ body {
   padding: 1rem;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 .controls {
   display: grid;
   gap: 0.9rem;
