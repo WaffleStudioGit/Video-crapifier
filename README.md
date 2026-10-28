@@ -1,38 +1,23 @@
-# Video / Audio Crapifier
+# Crapifier
 
-Browser-only tools that ruin media on purpose. Nothing is uploaded to a server.
+One-page browser tool that ruins audio or video. Drop a file — type is detected automatically.
 
-### Video (`index.html`)
-- locks output to **10 fps**
-- **pixelates** every kept frame
-- **boosts + hard-clips** the audio
+### Video
+- **10 fps**, pixelation, boosted/clipped soundtrack → **WebM**
 
-### Audio (`audio.html`)
-- crushes sample rate (default **8 kHz**)
-- **boosts + hard-clips**
-- **bit-crushes** (default 8-bit)
-- downloads a mangled **WAV**
+### Audio
+- Sample-rate crush, boost/clip, bit crush → **WAV**
 
-## Put it on InfinityFree
+UI uses **Gruvbox dark** (morhetz palette). Processing stays in the browser.
 
-1. Log into the [InfinityFree](https://www.infinityfree.com/) control panel → **File Manager** (or use FTP).
-2. Open `htdocs` (or the folder for your domain).
-3. Upload these files into that folder:
-   - `index.html`
-   - `audio.html`
-   - `styles.css`
-   - `crapifier.js`
-   - `audio-crapifier.js`
-4. Visit your site — use the **Video / Audio** nav to switch modes.
+## InfinityFree
 
-No PHP, databases, or FFmpeg needed.
+Upload to `/htdocs`:
 
-### Tips
-
-- Use **Chrome** or **Firefox**.
-- Video output is **WebM**; audio output is **WAV**.
-- Keep video clips short (recording is real-time). Audio render is offline and usually fast.
-- Google Fonts load from `fonts.googleapis.com`; fallbacks still work offline.
+- `index.html`
+- `styles.css`
+- `crapifier.js`
+- `audio.html` (optional redirect for old links)
 
 ## Local preview
 
@@ -40,4 +25,4 @@ No PHP, databases, or FFmpeg needed.
 python3 -m http.server 8080
 ```
 
-Then open `http://localhost:8080` (video) or `http://localhost:8080/audio.html` (audio).
+Open `http://localhost:8080`.

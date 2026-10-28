@@ -2,71 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Audio Crapifier</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Anybody:wght@700;800;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+  <meta http-equiv="refresh" content="0; url=index.html" />
+  <title>Redirecting…</title>
+  <link rel="canonical" href="index.html" />
+  <script>location.replace("index.html");</script>
 </head>
 <body>
-  <div class="noise" aria-hidden="true"></div>
-  <main class="shell">
-    <nav class="mode-nav" aria-label="Mode">
-      <a href="index.html">Video</a>
-      <a href="audio.html" aria-current="page">Audio</a>
-    </nav>
-
-    <header class="hero">
-      <p class="kicker">InfinityFree-ready · runs in your browser</p>
-      <h1 class="brand">Audio<br />Crapifier</h1>
-      <p class="tag">
-        Drop a track. We crush the sample rate, boost hard, and clip until it’s a fried mess.
-      </p>
-    </header>
-
-    <section class="stage" aria-label="Audio crapifier controls">
-      <label class="drop" id="dropZone">
-        <input type="file" id="fileInput" accept="audio/*,video/*" hidden />
-        <span class="drop-title" id="dropTitle">Pick audio</span>
-        <span class="drop-sub" id="dropSub">MP3, WAV, OGG, M4A — or a video (audio only). Local only.</span>
-      </label>
-
-      <div class="controls" id="controls" hidden>
-        <label class="field">
-          <span>Output rate <strong id="rateVal">8000 Hz</strong></span>
-          <input type="range" id="rate" min="4000" max="22050" value="8000" step="50" />
-        </label>
-        <label class="field">
-          <span>Audio boost <strong id="boostVal">14×</strong></span>
-          <input type="range" id="boost" min="2" max="40" value="14" step="1" />
-        </label>
-        <label class="field">
-          <span>Clip hardness <strong id="clipVal">92%</strong></span>
-          <input type="range" id="clip" min="40" max="99" value="92" />
-        </label>
-        <label class="field">
-          <span>Bit crush <strong id="bitsVal">8-bit</strong></span>
-          <input type="range" id="bits" min="3" max="16" value="8" step="1" />
-        </label>
-        <p class="hint">Offline render — no real-time wait. Output is a mangled <strong>WAV</strong>.</p>
-        <div class="actions">
-          <button type="button" class="btn primary" id="goBtn">Crapify</button>
-        </div>
-      </div>
-
-      <div class="preview-wrap" id="previewWrap" hidden>
-        <canvas id="wave" width="640" height="160"></canvas>
-        <div class="status" id="status">Idle</div>
-      </div>
-
-      <div class="result" id="result" hidden>
-        <audio id="outAudio" controls></audio>
-        <a class="btn primary" id="downloadBtn" download="crapified.wav">Download crapified.wav</a>
-      </div>
-    </section>
-  </main>
-
-  <script src="audio-crapifier.js"></script>
+  <p><a href="index.html">Crapifier moved here</a> — audio/video auto-detect on one page.</p>
 </body>
 </html>

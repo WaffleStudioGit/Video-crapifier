@@ -3,64 +3,110 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Video Crapifier</title>
+  <title>Crapifier</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Anybody:wght@700;800;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="noise" aria-hidden="true"></div>
-  <main class="shell">
-    <nav class="mode-nav" aria-label="Mode">
-      <a href="index.html" aria-current="page">Video</a>
-      <a href="audio.html">Audio</a>
-    </nav>
-
-    <header class="hero">
-      <p class="kicker">InfinityFree-ready · runs in your browser</p>
-      <h1 class="brand">Video<br />Crapifier</h1>
-      <p class="tag">
-        Drop a clip. We grind it to 10&nbsp;fps, smash the pixels, and clip the audio until it hurts.
-      </p>
+  <div class="scan" aria-hidden="true"></div>
+  <main class="app">
+    <header class="statusbar">
+      <div class="statusbar-left">
+        <span class="mode-dot" id="modeDot" data-mode="idle"></span>
+        <span class="brand">crapifier</span>
+        <span class="sep">·</span>
+        <span class="kicker">local mush engine</span>
+      </div>
+      <div class="statusbar-right">
+        <span class="badge" id="modeBadge">awaiting file</span>
+      </div>
     </header>
 
-    <section class="stage" aria-label="Crapifier controls">
-      <label class="drop" id="dropZone">
-        <input type="file" id="fileInput" accept="video/*" hidden />
-        <span class="drop-title" id="dropTitle">Pick a video</span>
-        <span class="drop-sub" id="dropSub">MP4, WebM, MOV — processed locally, nothing uploaded</span>
-      </label>
+    <section class="hero">
+      <h1 class="title">Ruin media.<br />No tabs required.</h1>
+      <p class="tag">
+        Drop audio or video — we detect the type, then crush it.
+        Video goes 10&nbsp;fps + pixelated; audio gets rate-crushed, boosted, and clipped.
+      </p>
+    </section>
 
-      <div class="controls" id="controls" hidden>
-        <label class="field">
-          <span>Pixel blocks <strong id="pixelVal">18</strong></span>
-          <input type="range" id="pixelSize" min="4" max="48" value="18" />
-        </label>
-        <label class="field">
-          <span>Audio boost <strong id="boostVal">14×</strong></span>
-          <input type="range" id="boost" min="2" max="40" value="14" step="1" />
-        </label>
-        <label class="field">
-          <span>Clip hardness <strong id="clipVal">92%</strong></span>
-          <input type="range" id="clip" min="40" max="99" value="92" />
-        </label>
-        <p class="hint">Output locked at <strong>10 fps</strong> so your browser does less work.</p>
-        <div class="actions">
-          <button type="button" class="btn primary" id="goBtn">Crapify</button>
-          <button type="button" class="btn ghost" id="stopBtn" hidden>Stop</button>
+    <section class="panel drop" id="dropZone">
+      <input type="file" id="fileInput" accept="audio/*,video/*" hidden />
+      <div class="drop-row">
+        <span class="prompt">$</span>
+        <div>
+          <p class="drop-title" id="dropTitle">drop a file or click to open</p>
+          <p class="drop-sub" id="dropSub">mp3 · wav · ogg · m4a · mp4 · webm · mov — processed in-browser</p>
         </div>
       </div>
+    </section>
 
-      <div class="preview-wrap" id="previewWrap" hidden>
-        <canvas id="preview" width="640" height="360"></canvas>
-        <div class="status" id="status">Idle</div>
+    <section class="panel controls" id="controls" hidden>
+      <div class="panel-head">
+        <span class="panel-label">// params</span>
+        <span class="panel-meta" id="paramMeta">shared</span>
       </div>
 
-      <div class="result" id="result" hidden>
-        <video id="outVideo" controls playsinline></video>
-        <a class="btn primary" id="downloadBtn" download="crapified.webm">Download crapified.webm</a>
+      <div class="fields" id="videoFields" hidden>
+        <label class="field">
+          <span class="field-key">pixel_blocks</span>
+          <input type="range" id="pixelSize" min="4" max="48" value="18" />
+          <strong id="pixelVal">18</strong>
+        </label>
       </div>
+
+      <div class="fields" id="audioFields" hidden>
+        <label class="field">
+          <span class="field-key">output_rate</span>
+          <input type="range" id="rate" min="4000" max="22050" value="8000" step="50" />
+          <strong id="rateVal">8000 Hz</strong>
+        </label>
+        <label class="field">
+          <span class="field-key">bit_crush</span>
+          <input type="range" id="bits" min="3" max="16" value="8" step="1" />
+          <strong id="bitsVal">8-bit</strong>
+        </label>
+      </div>
+
+      <div class="fields">
+        <label class="field">
+          <span class="field-key">audio_boost</span>
+          <input type="range" id="boost" min="2" max="40" value="14" step="1" />
+          <strong id="boostVal">14×</strong>
+        </label>
+        <label class="field">
+          <span class="field-key">clip_hardness</span>
+          <input type="range" id="clip" min="40" max="99" value="92" />
+          <strong id="clipVal">92%</strong>
+        </label>
+      </div>
+
+      <p class="hint" id="hint">Ready when you are.</p>
+      <div class="actions">
+        <button type="button" class="btn primary" id="goBtn">:Crapify</button>
+        <button type="button" class="btn ghost" id="stopBtn" hidden>:Stop</button>
+      </div>
+    </section>
+
+    <section class="panel preview-wrap" id="previewWrap" hidden>
+      <div class="panel-head">
+        <span class="panel-label">// preview</span>
+        <span class="panel-meta" id="status">idle</span>
+      </div>
+      <canvas id="preview" width="640" height="360" hidden></canvas>
+      <canvas id="wave" width="640" height="160" hidden></canvas>
+    </section>
+
+    <section class="panel result" id="result" hidden>
+      <div class="panel-head">
+        <span class="panel-label">// output</span>
+        <span class="panel-meta" id="resultMeta">done</span>
+      </div>
+      <video id="outVideo" controls playsinline hidden></video>
+      <audio id="outAudio" controls hidden></audio>
+      <a class="btn primary" id="downloadBtn" download="crapified">:Download</a>
     </section>
   </main>
 
